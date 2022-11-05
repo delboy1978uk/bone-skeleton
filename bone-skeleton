@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+echo ""
+echo "☠️ ️ Bone Framework Skeleton Manager"
+echo ""
+
+while :; do
+
+  read -r -p 'Project name (folder): ' folder
+  read -r -p 'SiteURL: ' siteURL
+  read -r -p 'XXX: ' xxx
+
+  echo ""
+  echo "You set url as $siteURL"
+  echo "You set xxx as $xxx"
+  echo ""
+
+  git clone ssh://git@github.com/delboy1978uk/lamp $folder
+  cd $folder
+  rm -fr .git
+  rm -fr code
+  git clone ssh://git@github.com/delboy1978uk/boneframework code
+  cd code
+  git checkout feature/full
+  rm -fr .git
+  git init
+  git add .
+  git commit -m "Initial commit"
+  cd ..
+  git clone ssh://git@github.com/delboy1978uk/bone-native app
+  cd app
+  rm -fr .git
+  git init
+  git add .
+  git commit -m "Initial commit"
+  cd ..
+
+  echo ""
+  echo "Project created in ./$folder"
+  echo "To start up the backend, do the following:"
+  echo ""
+  echo "  cd $folder"
+  echo "  docker-compose up"
+  echo ""
+  echo "To start up the react natrive app, do the following:"
+  echo ""
+  echo "  cd $folder/app"
+  echo "  npx expo start"
+  echo ""
+
+  read -r -p 'Exit? (type "e" to exit): '
+  [[ "${REPLY}" == 'e' ]] && break
+
+done
+
